@@ -1,5 +1,4 @@
 ﻿namespace Ordering.Domain.Models;
-
 public class Order : Aggregate<OrderId>
 {
     private readonly List<OrderItem> _orderItems = new();
@@ -11,7 +10,6 @@ public class Order : Aggregate<OrderId>
     public Address BillingAddress { get; private set; } = default!;
     public Payment Payment { get; private set; } = default!;
     public OrderStatus Status { get; private set; } = OrderStatus.Pending;
-
     public decimal TotalPrice
     {
         get => OrderItems.Sum(x => x.Price * x.Quantity);
@@ -28,7 +26,7 @@ public class Order : Aggregate<OrderId>
             ShippingAddress = shippingAddress,
             BillingAddress = billingAddress,
             Payment = payment,
-            Status = OrderStatus.Pending,
+            Status = OrderStatus.Pending
         };
 
         order.AddDomainEvent(new OrderCreatedEvent(order));
@@ -36,7 +34,7 @@ public class Order : Aggregate<OrderId>
         return order;
     }
 
-    public void Update(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+    public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
     {
         OrderName = orderName;
         ShippingAddress = shippingAddress;

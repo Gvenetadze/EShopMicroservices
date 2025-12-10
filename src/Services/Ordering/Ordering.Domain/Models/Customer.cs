@@ -1,5 +1,4 @@
 ﻿namespace Ordering.Domain.Models;
-
 public class Customer : Entity<CustomerId>
 {
     public string Name { get; private set; } = default!;
@@ -7,8 +6,8 @@ public class Customer : Entity<CustomerId>
 
     public static Customer Create(CustomerId id, string name, string email)
     {
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentException.ThrowIfNullOrEmpty(email);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
 
         var customer = new Customer
         {
